@@ -1,0 +1,26 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  OUTDIR: out
+
+tasks:
+  default:
+    cmds:
+      - task: gen
+
+  gen:
+    desc: Generate types.go from data, schema and template.
+    sources:
+      - data.cue
+      - schema.cue
+      - types.go.tmpl
+    generates:
+      - "{{.OUTDIR}}/types.go"
+    cmds:
+      - hof gen data.cue schema.cue -T types.go.tmpl=types.go -O {{.OUTDIR}}
+
+  clean:
+    cmds:
+      - rm -rf {{.OUTDIR}}

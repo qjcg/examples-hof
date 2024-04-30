@@ -1,0 +1,36 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  OUTDIR: out
+
+tasks:
+  default:
+    cmds:
+      - task: gen
+      - task: gen-convert
+
+  gen:
+    desc: Generate a document from JSON data and a Go template.
+    sources:
+      - interlude.json
+      - interlude.template
+    generates:
+      - "{{.OUTDIR}}/interlude.txt"
+    cmds:
+      - hof gen interlude.json -T interlude.template=interlude.txt -O {{.OUTDIR}}
+
+  gen-convert:
+    desc: Demonstrate that no template file with an output file name will convert (e.g. json -> yaml).
+    sources:
+      - interlude.json
+    generates:
+      - "{{.OUTDIR}}/data.yaml"
+    cmds:
+      - hof gen interlude.json -T =data.yaml -O {{.OUTDIR}}
+
+  clean:
+    desc: Delete all output files.
+    cmds:
+      - rm -rf {{.OUTDIR}}

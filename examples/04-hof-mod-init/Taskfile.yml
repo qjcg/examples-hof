@@ -1,0 +1,24 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  MOD_PATH: example.com/foo
+
+
+tasks:
+  default:
+    cmds:
+      - task: mod-init
+
+  mod-init:
+    desc: Create a new hof module.
+    status:
+      - grep {{.MOD_PATH}} cue.mod/module.cue
+    cmds:
+      - hof mod init {{.MOD_PATH}}
+
+  clean:
+    desc: Delete newly created hof module.
+    cmds:
+      - rm -rf cue.mod

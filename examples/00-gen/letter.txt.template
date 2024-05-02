@@ -1,0 +1,12 @@
+Dear {{.name}},
+
+I have one question for you:
+
+{{.question}}
+
+And one answer:
+
+{{ .answer }}
+
+Sincerely,
+The big crazy computer

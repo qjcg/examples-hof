@@ -2,6 +2,15 @@
 
 version: '3'
 
+# FIXME: HOF_FMT_DISABLED is currently broken.
+#   - See
+#     - https://github.com/hofstadter-io/hof/blob/_dev/lib/fmt/fmtrs.go#L67
+#   - PRs submitted:
+#     - https://github.com/hofstadter-io/hof/pull/360
+#     - https://github.com/hofstadter-io/hof/pull/361
+# env:
+#   HOF_FMT_DISABLED: 1
+
 vars:
   OUTDIR: out
 
@@ -12,23 +21,23 @@ tasks:
       - task: gen-convert
 
   gen:
-    desc: Generate a document from JSON data and a Go template.
+    desc: Generate a document by combining data and a Go template.
     sources:
-      - interlude.json
-      - interlude.template
+      - data.yaml
+      - letter.txt.template
     generates:
-      - "{{.OUTDIR}}/interlude.txt"
+      - "{{.OUTDIR}}/letter.txt"
     cmds:
-      - hof gen interlude.json -T interlude.template=interlude.txt -O {{.OUTDIR}}
+      - hof gen data.yaml -T letter.txt.template=letter.txt -O {{.OUTDIR}}
 
   gen-convert:
-    desc: Demonstrate that no template file with an output file name will convert (e.g. json -> yaml).
+    desc: Demonstrate data format conversion (e.g. yaml -> json).
     sources:
-      - interlude.json
+      - data.yaml
     generates:
-      - "{{.OUTDIR}}/data.yaml"
+      - "{{.OUTDIR}}/data.json"
     cmds:
-      - hof gen interlude.json -T =data.yaml -O {{.OUTDIR}}
+      - hof gen data.yaml -T =data.json -O {{.OUTDIR}}
 
   clean:
     desc: Delete all output files.

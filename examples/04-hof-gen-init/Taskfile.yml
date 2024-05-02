@@ -9,10 +9,15 @@ vars:
 tasks:
   default:
     cmds:
-      - task: gen-init
+      - task: gen
+
+  gen:
+    desc: Generate files using local generator.
+    cmds:
+      - hof gen
 
   gen-init:
-    desc: Generate a new hof file structure.
+    desc: Generate a new hof generator file structure.
     status:
       - test -d creators
       - test -d cue.mod

@@ -1,0 +1,18 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  build:
+    desc: Build artifacts.
+    cmds:
+      - echo TODO && false
+
+  clean:
+    desc: Delete all built artifacts.
+    cmds:
+      - echo TODO && false

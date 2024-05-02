@@ -1,0 +1,32 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  MOD_PATH: example.com/foo
+
+
+tasks:
+  default:
+    cmds:
+      - task: gen-init
+
+  gen-init:
+    desc: Generate a new hof file structure.
+    status:
+      - test -d creators
+      - test -d cue.mod
+      - grep {{.MOD_PATH}} cue.mod/module.cue
+      - test -d examples
+      - test -d gen
+      - test -d partials
+      - test -d schema
+      - test -d statics
+      - test -d templates
+    cmds:
+      - hof gen init {{.MOD_PATH}}
+
+  clean:
+    desc: Delete all generated files.
+    cmds:
+      - rm -rf creators cue.mod examples gen out partials schema statics templates {{base .MOD_PATH}}.cue
